@@ -52,7 +52,7 @@ This project provides a simple implementation for sending and verifying OTPs (On
      ```env
      ACCOUNT_SID=your_account_sid
      AUTH_TOKEN=your_auth_token
-     TWILIO_DEFAULT_SENDER_NUMBER=your_twilio_sender_number
+     TWILIO_DEFAULT_SENDER_NUMBER=your_twilio_sender_number  # You need to purchase the number from twilio for sending messages. You can also buy any random number from twilio for trial purpose and replace it with your the desired number from which you wanted to send messages after buying the premium version.
      VERIFY_SERVICE_SID=your_verify_service_sid
      ```
 
@@ -64,7 +64,7 @@ This project provides a simple implementation for sending and verifying OTPs (On
 Use the `send_otp` method to send an OTP to a specified phone number.
 
 ```python
-sms_client = Twilio2FASMS()
+sms_client = Twilio2FASMSWithSingletonClient()
 status = sms_client.send_otp(phone_number="+918488886809")
 if status == "pending":
     print("OTP sent successfully.")
@@ -107,7 +107,7 @@ Here is a complete example:
 ```python
 if __name__ == "__main__":
     phone_number = "+918488886809"
-    sms_client = Twilio2FASMS()
+    sms_client = Twilio2FASMSWithSingletonClient()
 
     # Send OTP
     otp_status = sms_client.send_otp(phone_number)
@@ -155,8 +155,4 @@ pip install -r requirements.txt
 Use the logs to diagnose issues. Errors are logged with detailed stack traces.
 
 ---
-
-## License
-
-This project is licensed under the MIT License.
 

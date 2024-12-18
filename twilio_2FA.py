@@ -81,7 +81,6 @@ from dotenv import load_dotenv
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
-# Load environment variables
 load_dotenv()
 
 # Configure logger
@@ -93,7 +92,7 @@ class Twilio2FASMS:
         self.account_sid = os.getenv('ACCOUNT_SID')
         self.auth_token = os.getenv('AUTH_TOKEN')
         self.default_sender = os.getenv('TWILIO_DEFAULT_SENDER_NUMBER')
-        self.verify_service_sid = "VA353b3f910d1b7a881aa3e32b7dcb7fad"  # Twilio Verify Service SID
+        self.verify_service_sid = os.getenv('VERIFY_SERVICE_SID')# Twilio Verify Service SID
         self.client = self._create_client()
 
     def _create_client(self):
@@ -144,9 +143,8 @@ class Twilio2FASMS:
             logger.error(f"Unexpected error sending SMS: {e}", exc_info=True)
 
 
-# Example usage
 if __name__ == "__main__":
-    phone_number = "+918488886809"
+    phone_number = input("Enter your phone number: ")
     sms_client = Twilio2FASMS()
 
     # Send OTP
@@ -157,7 +155,7 @@ if __name__ == "__main__":
     else:
         code = None
 
-    # Verify OTP (replace "217740" with the actual OTP)
+    # Verify OTP
     verification_status = sms_client.verify_otp(phone_number, code=code)
     if verification_status == "approved":
         sms_client.send_text_message(phone_number, body="Hello")
